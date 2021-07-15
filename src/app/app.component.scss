@@ -15,3 +15,16 @@ mat-toolbar {
 div.center{
   text-align: center;
 }
+
+.bar{
+  background-color:rgb(219,45,44);
+  color : white;
+}
+
+.form{
+  background-color: white;
+}
+
+div, mat-form-field, mat-hint {
+  line-height: normal;
+}

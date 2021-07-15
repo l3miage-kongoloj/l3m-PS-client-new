@@ -14,17 +14,21 @@ import {MatSelectModule} from '@angular/material/select';
 import {MatMenuModule} from '@angular/material/menu';
 import { FormsModule } from '@angular/forms';
 import { MaterialModule } from './material/material.module';
+import { HttpClientModule } from '@angular/common/http';
+import { InputComponent } from './input/input.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
+    InputComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     FormsModule,
+    HttpClientModule,
     MaterialModule
   ],
   providers: [],

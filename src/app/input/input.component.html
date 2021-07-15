@@ -1,0 +1,11 @@
+<div class="container" style="display:flex">
+    <div class="item">
+      <mat-form-field class="example-form-field">
+        <mat-label>Effectif </mat-label>
+        <input matInput type="text" name="effectif" class="form-control" required #effectif="ngModel" ngModel>
+      </mat-form-field>
+      <div *ngIf="effectif.invalid && (effectif.dirty || effectif.touched)" class="alert" style="color:red; position: relative; left:18%;bottom:15%">
+        entrée invalide
+      </div>
+    </div>
+  </div>

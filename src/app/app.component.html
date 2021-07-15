@@ -2,358 +2,561 @@
 
 <div class="center">
   <b>NUMERO D'ETUDIANT</b><br><br><input>
-<button> submit </button><br><br>
+  <button> submit </button><br><br>
 </div>
 
+<br><br>
 
-<mat-toolbar>
-    <h2  style="position: relative;left: 50%; transform: translateX(-50%);"> COORDONNEES DE L'ETUDIANT </h2>
-</mat-toolbar><br>
+<mat-tab-group class="label">
 
-<form class ="label">
-  <div style="display: flex; justify-content: space-evenly;">
-    <div>
-      <mat-form-field appearance="outline">
-        <mat-label><b>Nom :</b></mat-label>
-        <input matInput name='Nom' required>
-        <mat-icon matSuffix>person</mat-icon>
-      </mat-form-field><br><br>
+  <mat-tab label="Etudiant">
+    <mat-toolbar class="bar">
+      <h2 style="position: relative;left: 50%; transform: translateX(-50%);"> COORDONNEES DE L'ETUDIANT </h2>
+    </mat-toolbar><br>
 
-      <mat-form-field appearance="outline">
-        <mat-label><b>Prénom :</b></mat-label>
-        <input matInput name='Prénom' type="text" required>
-        <mat-icon matSuffix>person</mat-icon>
-      </mat-form-field><br><br>
+    <form>
+      <div style="display: flex; justify-content: space-evenly;">
+        <div>
+          <mat-form-field appearance="outline">
+            <mat-label><b>Nom :</b></mat-label>
+            <input matInput ngModel pattern="[a-zA-Z]{1,}" name="nomEtud" #nomEtud="ngModel" type="text"  required>
 
-      <mat-form-field appearance="outline">
-        <mat-label><b>N° étudiant : </b></mat-label>
-        <input name='N° étudiant' type="text" matInput required>
-      </mat-form-field><br><br>
+            <mat-icon matSuffix>person</mat-icon>
+            <mat-error *ngIf="nomEtud.errors?.required && (nomEtud.dirty || nomEtud.touched)" style="color : red;">Nom requis</mat-error>
+            <mat-error *ngIf="nomEtud.errors?.pattern " class="text-danger" style="color : red;">
+              Nom invalid
+            </mat-error>
 
-      <mat-form-field appearance="outline">
-        <mat-label><b>N° de portable :</b></mat-label>
-        <input name='N° de portable' placeholder="+33 7 01 01 01 01" type="text" matInput required>
-        <mat-icon matSuffix>call</mat-icon>
-        <!--mat-error *ngIf="numPortable.invalid">Numero de Portable invalide</-mat-error-->
-      </mat-form-field><br><br>
-      <div>
-        <mat-form-field appearance="outline">
-          <mat-label><b>Inscrit en :</b></mat-label>
-          <input name='Inscrit en' placeholder="L3 MIAGE" type="text" matInput required>
-          <mat-icon matSuffix>class</mat-icon>
-          <mat-hint>Préciser la filière d'études</mat-hint>
-        </mat-form-field><br><br>
+          </mat-form-field><br><br>
+
+          <mat-form-field appearance="outline">
+            <mat-label><b>Prénom :</b></mat-label>
+
+            <input ngModel #prenomEtud="ngModel" pattern="[a-zA-Zàáâäãçèéêëìíîïôö]{1,}" matInput name='prenomEtud' type="text" required>
+            <mat-error *ngIf="prenomEtud.errors?.required && (prenomEtud.dirty || prenomEtud.touched)" style="color : red;">Prenom requis</mat-error>
+            <mat-error *ngIf="prenomEtud.errors?.pattern " class="text-danger" style="color : red;">Prenom invalid </mat-error>
+
+            <mat-icon matSuffix>person</mat-icon>
+          </mat-form-field><br><br>
+
+          <mat-form-field appearance="outline">
+            <mat-label><b>N° étudiant : </b></mat-label>
+            <input  ngModel #numEtud="ngModel" pattern="[0-9]{9}" name='numEtud' type="text" matInput required>
+            <mat-error *ngIf="numEtud.errors?.required && (numEtud.dirty || numEtud.touched)" style="color : red;">num Etudiant requis</mat-error>
+            <mat-error *ngIf="numEtud.errors?.pattern " class="text-danger" style="color : red;">num Etudiant invalid </mat-error>
+          </mat-form-field><br><br>
+
+          <mat-form-field appearance="outline">
+            <mat-label><b>N° de portable :</b></mat-label>
+            <input ngModel #numPo="ngModel" pattern="^[+]*(33|0)(6|7|9)[0-9]{8}$" name='numPo' placeholder="+33 7 01 01 01 01" type="text" matInput required>
+            <mat-error *ngIf="numPo.errors?.required && (numPo.dirty || numPo.touched)" style="color : red;">num de portable requis</mat-error>
+            <mat-error *ngIf="numPo.errors?.pattern " class="text-danger" style="color : red;">num de portable invalid </mat-error>
+          </mat-form-field><br><br>
+          <div>
+            <mat-form-field appearance="outline">
+              <mat-label><b>Inscrit en :</b></mat-label>
+              <input ngModel #inscritE="ngModel"  name='inscritE' placeholder="L3 MIAGE" type="text" matInput required>
+              <mat-icon matSuffix>class</mat-icon>
+              <mat-error *ngIf="inscritE.errors?.required && (inscritE.dirty || inscritE.touched)" style="color : red;">filière requise</mat-error>
+              <mat-hint>Préciser la filière d'études</mat-hint>
+            </mat-form-field><br><br>
+          </div>
+        </div>
+
+        <div>
+          <mat-form-field class="label-full-width" appearance="outline">
+            <mat-label><b>Mail :</b></mat-label>
+            <input ngModel #mail="ngModel" name='mail' pattern="[a-zA-z.]{1,}[-][a-zA-z]{1,}@etu[.]univ-grenoble-alpes[.]fr" placeholder="Ex. ...@etu.univ-grenoble-alpes.fr" type="text" matInput required>
+            <mat-icon matSuffix>mail</mat-icon>
+            <mat-error *ngIf="mail.errors?.required && (mail.dirty || mail.touched)" style="color : red;">Mail requis</mat-error>
+            <mat-error *ngIf="mail.errors?.pattern " class="text-danger" style="color : red;">Mail invalid </mat-error>
+          </mat-form-field><br><br>
+
+          <mat-form-field class="label-full-width" appearance="outline">
+            <mat-label><b>Adresse :</b></mat-label>
+            <textarea ngModel #ad="ngModel" name='ad' matInput placeholder="Ex. 435 allée des chênes verts - 38388 Labelleville" required></textarea>
+            <mat-error *ngIf="ad.errors?.required && (ad.dirty || ad.touched)" style="color : red;">adresse requis</mat-error>
+            <mat-icon matSuffix>place</mat-icon>
+          </mat-form-field><br><br>
+
+          <mat-form-field appearance="fill">
+            <mat-label><b>Type d'affiliation</b></mat-label>
+            <select #aff matNativeControl required>
+              <option value="ayant droit">ayant droit</option>
+              <option value="étudiant">étudiant</option>
+              <option value="assuré volontaire">assuré volontaire</option>
+              <option value="étudiant étranger">étudiant étranger</option>
+            </select>
+          </mat-form-field><br><br>
+
+          <mat-form-field appearance="fill">
+            <mat-label><b>Caisse d’assurance maladie:</b></mat-label>
+            <select  #CAM matNativeControl required>
+              <option value="CPAM">CPAM</option>
+              <option value="MSA">MSA</option>
+              <option value="Travailleur indépendant">Travailleur indépendant</option>
+              <option value="régimes spéciaux">régimes spéciaux</option>
+            </select>
+          </mat-form-field><br><br>
+          <div>
+            <mat-form-field appearance="outline">
+              <mat-label><b>Enseignant référent :</b></mat-label>
+              <input ngModel #ens="ngModel" pattern="[aA-z]{1,}[\s][a-zA-Z]{1,}" name='ens' placeholder="Sarah Frechie" type="text" matInput required>
+              <mat-error *ngIf="ens.errors?.required && (ens.dirty || ens.touched)" style="color : red;"> Enseignant requis</mat-error>
+              <mat-error *ngIf="ens.errors?.pattern " class="text-danger" style="color : red;">Enseigant invalid </mat-error>
+              <mat-icon matSuffix>person</mat-icon>
+              <mat-hint>Pour l’encadrement du stage pour votre année d’étude (validera cette fiche)</mat-hint>
+            </mat-form-field><br><br>
+          </div>
+        </div>
       </div>
+
+    </form>
+    <br><br>
+
+    <div class="center">
+      <button class="center" (click)='createEtudiant(
+        {
+          numEtudiant: numEtud.value,
+          nom:nomEtud.value,
+          prenom: prenomEtud.value,
+          adresse : ad.value,
+          numPortable: numPo.value,
+          assurance: CAM.value,
+          typeAffil: aff.value,
+          mail : mail.value
+        })'>submit </button>
+
+
     </div>
+    <br><br>
 
-    <div>
-      <mat-form-field class="label-full-width" appearance="outline">
-        <mat-label><b>Mail :</b></mat-label>
-        <input name='Mail' placeholder="Ex. ...@etu.univ-grenoble-alpes.fr" type="text" matInput required>
-        <mat-icon matSuffix>mail</mat-icon>
-      </mat-form-field><br><br>
+  </mat-tab>
 
-      <mat-form-field class="label-full-width" appearance="outline">
-        <mat-label><b>Adresse :</b></mat-label>
-        <textarea matInput placeholder="Ex. 435 allée des chênes verts - 38388 Labelleville" required></textarea>
-        <mat-icon matSuffix>place</mat-icon>
-      </mat-form-field><br><br>
+  <mat-tab label="Etablissement d'acceuil">
+    <mat-toolbar class="bar">
+      <h2 style="position: relative;left: 50%; transform: translateX(-50%);"> COORDONNEES ETABLISSEMENT D’ACCUEIL DU
+        STAGIAIRE </h2>
+    </mat-toolbar><br><br>
 
-      <mat-form-field appearance="fill">
-        <mat-label><b>Type d'affiliation</b></mat-label>
-        <select matNativeControl required>
-          <option value="ayant droit">ayant droit</option>
-          <option value="étudiant">étudiant</option>
-          <option value="assuré volontaire">assuré volontaire</option>
-          <option value="étudiant étranger">étudiant étranger</option>
-        </select>
-      </mat-form-field><br><br>
+    <form>
+      <div style="display: flex; justify-content: space-evenly;">
+        <div>
+          <mat-form-field appearance="outline">
+            <mat-label><b>Raison Sociale: </b></mat-label>
+            <input ngModel  #raison="ngModel" name='raison' type="text" matInput required>
+            <mat-error *ngIf="raison.errors?.required && (raison.dirty || raison.touched)" style="color : red;">Raison sociale requise</mat-error>
+          </mat-form-field><br><br>
 
-      <mat-form-field appearance="fill">
-        <mat-label><b>Caisse d’assurance maladie:</b></mat-label>
-        <select matNativeControl required>
-          <option value="CPAM">CPAM</option>
-          <option value="MSA">MSA</option>
-          <option value="Travailleur indépendant">Travailleur indépendant</option>
-          <option value="régimes spéciaux">régimes spéciaux</option>
-        </select>
-      </mat-form-field><br><br>
-      <div>
-        <mat-form-field appearance="outline">
-          <mat-label><b>Enseignant référent :</b></mat-label>
-          <input name=Enseignant placeholder="L.Pierre" type="text" matInput required>
-          <mat-icon matSuffix>person</mat-icon>
-          <mat-hint>Pour l’encadrement du stage pour votre année d’étude (validera cette fiche)</mat-hint>
-        </mat-form-field><br><br>
+          <mat-form-field appearance="outline">
+            <mat-label><b>Représentant légal: </b></mat-label>
+            <input ngModel pattern="[aA-z]{1,}[\s][a-zA-Z]{1,}" #rep="ngModel" name='rep' type="text" matInput required>
+            <mat-error *ngIf="rep.errors?.required && (rep.dirty || rep.touched)" style="color : red;"> Représentant légal requis</mat-error>
+            <mat-error *ngIf="rep.errors?.pattern " class="text-danger" style="color : red;">Représentant légal invalid </mat-error>
+            <mat-icon matSuffix>person</mat-icon>
+            <mat-hint>prénom Nom</mat-hint>
+          </mat-form-field><br><br>
+
+          <mat-form-field appearance="outline">
+            <mat-label><b>Fonction : </b></mat-label>
+            <input ngModel #fonc="ngModel" name='fonc' type="text" matInput required>
+            <mat-error *ngIf="fonc.errors?.required && (fonc.dirty || fonc.touched)" style="color : red;"> Fonction requise</mat-error>
+            <mat-icon matSuffix>assignment</mat-icon>
+          </mat-form-field><br><br>
+
+          <mat-form-field appearance="outline">
+            <mat-label><b>N° de SIRET :</b></mat-label>
+            <input ngModel #numSi="ngModel" pattern="[0-9]{14}" name='numSi' type="text" matInput required>
+            <mat-error *ngIf="numSi.errors?.required && (numSi.dirty || numSi.touched)" style="color : red;"> N° de SIRET requis</mat-error>
+            <mat-error *ngIf="numSi.errors?.pattern " class="text-danger" style="color : red;">N° de SIRET invalid </mat-error>
+
+          </mat-form-field><br><br>
+
+          <mat-form-field appearance="outline">
+            <mat-label><b>Code APE :</b></mat-label>
+            <input ngModel #ape="ngModel" pattern="[0-9]{4}[A-Z]" name='ape' type="text" matInput required>
+            <mat-error *ngIf="ape.errors?.required && (ape.dirty || ape.touched)" style="color : red;"> Code APE requis</mat-error>
+            <mat-error *ngIf="ape.errors?.pattern " class="text-danger" style="color : red;">Code APE invalid </mat-error>
+          </mat-form-field><br><br>
+
+          <mat-form-field appearance="outline">
+            <mat-label><b>Domaine d'activité :</b></mat-label>
+            <input ngModel #dom="ngModel" name='dom' type="text" matInput required>
+            <mat-error *ngIf="dom.errors?.required && (dom.dirty || dom.touched) " class="text-danger" style="color : red;">Domaine d'activité requis </mat-error>
+            <mat-icon matSuffix>domain</mat-icon>
+          </mat-form-field><br><br>
+        </div>
+
+        <div>
+          <mat-form-field appearance="outline">
+            <mat-label><b>Effectif :</b></mat-label>
+            <input ngModel #eff="ngModel" pattern="[0-9]{1,}" name='eff' type="text" matInput required>
+            <mat-error *ngIf="eff.errors?.required && (eff.dirty || eff.touched)" style="color : red;"> Effectif requis</mat-error>
+            <mat-error *ngIf="eff.errors?.pattern " class="text-danger" style="color : red;">Effectif invalid </mat-error>
+
+
+          </mat-form-field><br><br>
+
+          <mat-form-field class="label-full-width" appearance="outline">
+            <mat-label><b>Adresse :</b></mat-label>
+            <textarea ngModel #adR="ngModel" name='adR' matInput placeholder="Ex. 435 allée des chênes verts - 38388 Labelleville" required></textarea>
+            <mat-error *ngIf="adR.errors?.required && (adR.dirty || adR.touched)" style="color : red;">adresse requise</mat-error>
+            <mat-icon matSuffix>place</mat-icon>
+          </mat-form-field><br><br>
+
+          <mat-form-field appearance="outline">
+            <mat-label><b>Code postal :</b></mat-label>
+            <input ngModel pattern="[0-9]{5}" #cp="ngModel"name='cp' type="text" matInput required>
+            <mat-error *ngIf="cp.errors?.required && (cp.dirty || cp.touched)" style="color : red;"> Code Postal requis</mat-error>
+            <mat-error *ngIf="cp.errors?.pattern " class="text-danger" style="color : red;">Code Postal invalid </mat-error>
+          </mat-form-field><br><br>
+
+          <mat-form-field appearance="outline">
+            <mat-label><b>Ville :</b></mat-label>
+            <input ngModel #ville="ngModel" pattern="[a-zA-Z]{1,}" name='ville' type="text" matInput required>
+            <mat-error *ngIf="ville.errors?.required && (ville.dirty || ville.touched)" style="color : red;"> Ville requise</mat-error>
+            <mat-error *ngIf="ville.errors?.pattern " class="text-danger" style="color : red;">Ville invalid </mat-error>
+            <mat-icon matSuffix>place</mat-icon>
+          </mat-form-field><br><br>
+
+          <mat-form-field appearance="outline">
+            <mat-label><b>Pays :</b></mat-label>
+            <input ngModel pattern="[a-zA-Z]{1,}" #pays="ngModel" name='pays' type="text" matInput required>
+            <mat-error *ngIf="pays.errors?.required && (pays.dirty || pays.touched)" style="color : red;"> Pays requis</mat-error>
+            <mat-error *ngIf="pays.errors?.pattern " class="text-danger" style="color : red;">Pays invalid </mat-error>
+            <mat-icon matSuffix>flag</mat-icon>
+          </mat-form-field><br><br>
+
+          <mat-form-field class="label-full-width" appearance="outline">
+            <mat-label><b>Service d’accueil du stagiaire :</b></mat-label>
+            <textarea  ngModel #serv="ngModel" matInput placeholder="Ex. 435 allée des chênes verts - 38388 Labelleville" name='serv'
+              type="text" matInput required></textarea>
+              <mat-error *ngIf="serv.errors?.required && (serv.dirty || serv.touched)" style="color : red;"> Service d'acceuil requis</mat-error>
+            <mat-icon matSuffix>place</mat-icon>
+            <mat-hint>Préciser l’adresse si différente de l’organisme</mat-hint>
+          </mat-form-field><br><br>
+        </div>
       </div>
+    </form>
+    <br><br>
+
+    <div class="center">
+      <button class="center"> submit </button>
     </div>
-  </div>
+    <br><br>
+  </mat-tab>
 
-</form>
+  <mat-tab label="RH">
+    <mat-toolbar class="bar">
+      <h3 style="position: relative;left: 50%; transform: translateX(-50%);"> SERVICE ASSURANT LA GESTION DES STAGIAIRES
+    </h3>
+    </mat-toolbar><br><br>
 
+    <form>
 
-<br><br>
+      <div style="display: flex; justify-content: space-evenly;">
+        <div>
+          <mat-form-field appearance="outline">
+            <mat-label><b>Nom :</b></mat-label>
+            <input matInput ngModel pattern="[a-zA-Z]{1,}" name="nomR" #nomR="ngModel" type="text"  required>
 
-<mat-toolbar>
-  <h2  style="position: relative;left: 50%; transform: translateX(-50%);">  COORDONNEES ETABLISSEMENT D’ACCUEIL DU STAGIAIRE </h2>
-</mat-toolbar><br><br>
+            <mat-icon matSuffix>person</mat-icon>
+            <mat-error *ngIf="nomR.errors?.required && (nomR.dirty || nomR.touched)" style="color : red;">Nom requis</mat-error>
+            <mat-error *ngIf="nomR.errors?.pattern " class="text-danger" style="color : red;">
+              Nom invalid
+            </mat-error>
 
-<form class ="label">
-  <div style="display: flex; justify-content: space-evenly;">
-    <div>
-      <mat-form-field appearance="outline">
-        <mat-label><b>Raison Sociale: </b></mat-label>
-        <input name='Raison Sociale' type="text" matInput required>
-      </mat-form-field><br><br>
+          </mat-form-field><br><br>
+          <mat-form-field appearance="outline">
+            <mat-label><b>Tél :</b></mat-label>
+            <input ngModel #tel="ngModel" pattern="^[+]*(33|0)(6|7|9)[0-9]{8}$" name='tel' placeholder="+33 7 01 01 01 01" type="text" matInput required>
+            <mat-error *ngIf="tel.errors?.required && (tel.dirty || tel.touched)" style="color : red;">num de téléphone requis</mat-error>
+            <mat-error *ngIf="tel.errors?.pattern " class="text-danger" style="color : red;">num de téléphone invalid </mat-error>
+            <mat-icon matSuffix>call</mat-icon>
+          </mat-form-field><br><br>
 
-      <mat-form-field appearance="outline">
-        <mat-label><b>Représentant légal: </b></mat-label>
-          <input name='Représentant légal' type="text" matInput required>
-          <mat-icon matSuffix>person</mat-icon>
-      </mat-form-field><br><br>
+          <mat-form-field class="label-full-width" appearance="outline">
+            <mat-label><b>Mail :</b></mat-label>
+            <input ngModel #mailR="ngModel" name='mailR' pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$" type="text" matInput required>
+            <mat-error *ngIf="mailR.errors?.required && (mailR.dirty || mailR.touched)" style="color : red;">Mail requis</mat-error>
+            <mat-error *ngIf="mailR.errors?.pattern " class="text-danger" style="color : red;">Mail invalid </mat-error>
+            <mat-icon matSuffix>mail</mat-icon>
+          </mat-form-field><br><br>
+        </div>
 
-      <mat-form-field appearance="outline">
-        <mat-label><b>Fonction : </b></mat-label>
-          <input name='Fonction' type="text" matInput required>
-          <mat-icon matSuffix>assignment</mat-icon>
-      </mat-form-field><br><br>
+        <div>
+          <mat-form-field appearance="outline">
+            <mat-label><b>Prénom :</b></mat-label>
+            <input ngModel #prenomR="ngModel" pattern="[a-zA-Zàáâäãçèéêëìíîïôö]{1,}" matInput name='prenomR' type="text" required>
+            <mat-error *ngIf="prenomR.errors?.required && (prenomR.dirty || prenomR.touched)" style="color : red;">Prenom requis</mat-error>
+            <mat-error *ngIf="prenomR.errors?.pattern " class="text-danger" style="color : red;">Prenom invalid </mat-error>
+            <mat-icon matSuffix>person</mat-icon>
+          </mat-form-field><br><br>
 
-      <mat-form-field appearance="outline">
-        <mat-label><b>N° de SIRET :</b></mat-label>
-          <input name='N° de SIRET :' type="text" matInput required>
-      </mat-form-field><br><br>
+          <mat-form-field class="label-full-width" appearance="outline">
+            <mat-label><b>Adresse :</b></mat-label>
+            <textarea name='Adresse' placeholder="Ex.  435 allée des chênes verts - 38388 Labelleville " type="text"
+              matInput required></textarea>
+            <mat-icon matSuffix>place</mat-icon>
+          </mat-form-field><br><br>
+        </div>
+      </div>
+    </form>
+    <br><br>
 
-      <mat-form-field appearance="outline">
-        <mat-label><b>Code APE :</b></mat-label>
-          <input name='Code APE' type="text" matInput required>
-      </mat-form-field><br><br>
-
-      <mat-form-field appearance="outline">
-        <mat-label><b>Domaine d'activité :</b></mat-label>
-          <input name='Domaine' type="text" matInput required>
-          <mat-icon matSuffix>domain</mat-icon>
-      </mat-form-field><br><br>
+    <div class="center">
+      <button class="center"> submit </button>
     </div>
+    <br><br>
 
-    <div>
-      <mat-form-field appearance="outline">
-        <mat-label><b>Effectif :</b></mat-label>
-          <input name='Effectif' type="text" matInput required>
-      </mat-form-field><br><br>
+  </mat-tab>
 
-      <mat-form-field class="label-full-width" appearance="outline">
-        <mat-label><b>Adresse :</b></mat-label>
-          <textarea placeholder="Ex. 435 allée des chênes verts" name='Adresse' type="text" matInput required></textarea>
-          <mat-icon matSuffix>place</mat-icon>
-      </mat-form-field><br><br>
+  <mat-tab label="Tuteur">
+    <mat-toolbar  class="bar">
+      <h2 style="position: relative;left: 50%; transform: translateX(-50%);"> TUTEUR PROFESSIONNEL DU STAGIAIRE </h2>
+    </mat-toolbar><br><br>
 
-      <mat-form-field appearance="outline">
-        <mat-label><b>Code postal :</b></mat-label>
-          <input name='Code Postal' type="text" matInput required>
-      </mat-form-field><br><br>
+    <form>
 
-      <mat-form-field appearance="outline">
-        <mat-label><b>Ville :</b></mat-label>
-        <input name='Ville' type="text" matInput required>
-        <mat-icon matSuffix>place</mat-icon>
-      </mat-form-field><br><br>
+      <div style="display: flex; justify-content: space-evenly;">
 
-      <mat-form-field appearance="outline">
-        <mat-label><b>Pays :</b></mat-label>
-          <input name='Pays' type="text" matInput required>
-          <mat-icon matSuffix>flag</mat-icon>
-      </mat-form-field><br><br>
+        <div>
+          <mat-form-field appearance="outline">
+            <mat-label><b>Nom :</b></mat-label>
+            <input name='Nom' type="text" matInput required>
+            <mat-icon matSuffix>person</mat-icon>
+          </mat-form-field><br><br>
 
-      <mat-form-field class="label-full-width" appearance="outline">
-        <mat-label><b>Service d’accueil du stagiaire :</b></mat-label>
-        <textarea matInput placeholder="Ex. 435 allée des chênes verts - 38388 Labelleville" name='Service' type="text" matInput required></textarea>
-        <mat-icon matSuffix>place</mat-icon>
-        <mat-hint>Préciser l’adresse si différente de l’organisme</mat-hint>
-      </mat-form-field><br><br>
+          <mat-form-field appearance="outline">
+            <mat-label><b>Tél :</b></mat-label>
+            <input name='Tél' type="text" matInput required>
+            <mat-icon matSuffix>call</mat-icon>
+
+          </mat-form-field><br><br>
+          <mat-form-field appearance="outline">
+            <mat-label><b>Fonction : </b></mat-label>
+            <input name='Fonction' type="text" matInput required>
+            <mat-icon matSuffix>assignment</mat-icon>
+          </mat-form-field><br><br>
+
+          <mat-form-field appearance="outline">
+            <mat-label><b>Service :</b></mat-label>
+            <input name='Service' type="text" matInput required>
+            <mat-icon matSuffix></mat-icon>
+          </mat-form-field><br><br>
+
+        </div>
+
+        <div>
+          <mat-form-field appearance="outline">
+            <mat-label><b>Prénom :</b></mat-label>
+            <input name='Prénom' type="text" matInput required>
+            <mat-icon matSuffix>person</mat-icon>
+          </mat-form-field><br><br>
+
+          <mat-form-field class="label-full-width" appearance="outline">
+            <mat-label><b>Mail :</b></mat-label>
+            <input name='Mail' placeholder="Ex. ...@etu.univ-grenoble-alpes.fr" type="text" matInput required>
+            <mat-icon matSuffix>mail</mat-icon>
+          </mat-form-field><br><br>
+
+          <mat-form-field class="label-full-width" appearance="outline">
+            <mat-label><b>Adresse :</b></mat-label>
+            <textarea name='Adresse' placeholder="Ex.  435 allée des chênes verts - 38388 Labelleville " type="text"
+              matInput required></textarea>
+            <mat-icon matSuffix>place</mat-icon>
+          </mat-form-field><br><br>
+
+          <mat-form-field class="label-full-width" appearance="fill">
+            <mat-label><b>Disponibilité du tuteur professionnel de stage : </b></mat-label>
+            <select matNativeControl required>
+              <option value="importante">importante</option>
+              <option value="partielle">partielle</option>
+              <option value="inexistante">inexistante</option>
+            </select>
+          </mat-form-field><br><br>
+
+        </div>
+      </div>
+    </form>
+    <br><br>
+
+    <div class="center">
+      <button class="center"> submit </button>
     </div>
-  </div>
-</form>
+    <br><br>
 
-<br><br>
+  </mat-tab>
 
-<mat-toolbar>
-  <h3  style="position: relative;left: 50%; transform: translateX(-50%);"> SERVICE ASSURANT LA GESTION DES STAGIAIRES (RH)</h3>
-</mat-toolbar><br><br>
+  <mat-tab label="Info stage">
+    <br>
+    <form>
 
-<form class ="label">
+      <mat-icon matSuffix>date_range</mat-icon> <b>DATES DU STAGE</b> :<br><br>
 
-  <div style="display: flex; justify-content: space-evenly;">
-    <div>
+      <p>👉 Période temps partiel : </p> <br>
+      <div style="display: flex; justify-content: space-evenly;">
+        <div>
+          <mat-form-field appearance="outline">
+            <mat-label>Date de début</mat-label>
+            <input name='DateDeb' type="date" matInput required>
+          </mat-form-field> <br><br>
+        </div>
+        <div>
+          <mat-form-field appearance="outline">
+            <mat-label>Date de fin</mat-label>
+            <input name='DateFin' type="date" matInput required>
+          </mat-form-field> <br><br>
+        </div>
+      </div>
+      <br>
+
+      <p>👉 Période temps plein (35 h/semaine) :</p> <br>
+      <div style="display: flex; justify-content: space-evenly;">
+        <div>
+          <mat-form-field appearance="outline">
+            <mat-label>Date de début</mat-label>
+            <input name='DateDeb' type="date" matInput required>
+          </mat-form-field> <br><br>
+        </div>
+        <div>
+          <mat-form-field appearance="outline">
+            <mat-label>Date de fin</mat-label>
+            <input name='DateFin' type="date" matInput required>
+          </mat-form-field> <br><br>
+        </div>
+      </div>
+      <br>
+      <p>👉 En cas d’interruption, merci de préciser les dates : </p> <br>
+      <div style="display: flex; justify-content: space-evenly;">
+        <div>
+          <mat-form-field appearance="outline">
+            <mat-label>Du</mat-label>
+            <input name='Du' type="date" matInput required>
+          </mat-form-field>
+        </div>
+        <div>
+          <mat-form-field appearance="outline">
+            <mat-label>Au</mat-label>
+            <input name='Au' type="date" matInput required>
+          </mat-form-field>
+        </div>
+      </div>
+      <div style="display: flex; justify-content: space-evenly;">
+        <mat-form-field appearance="outline">
+          <mat-label><b>Nombre total d’heures :</b></mat-label>
+          <input name='Nombre' type="text" matInput required>
+          <mat-hint>Nombre total d’heures du stage :</mat-hint>
+        </mat-form-field>
+      </div>
+
+    </form>
+    <br>
+
+    <form>
+      <mat-icon matSuffix>money</mat-icon> <b>GRATIFICATIONS</b>(obligatoires pour tout stage, même fractionné, à partir
+      du 45ème jour de présence) :<br><br>
+      <div style="display: flex; justify-content: space-evenly;">
+        <div>
+          <b>Oui</b><input name="oui" type="checkbox">
+        </div>
+        <div>
+          <b>Non</b><input name="oui" type="checkbox">
+        </div>
+      </div>
+      <br><br>
+      <mat-icon matSuffix>notification_important</mat-icon> <b>Si oui:</b> <br>
+      Montant gratification <b>horaire</b> (si montant mensuel, le diviser par 154) :<br><br>
+
+      <div style="display: flex; justify-content: space-evenly;">
+        <div>
+          <mat-form-field appearance="outline">
+            <mat-label><b>Montant en €</b></mat-label>
+            <input name='Montant' type="text" matInput required>
+            <mat-icon matSuffix>monetization_on</mat-icon>
+          </mat-form-field> <br><br>
+        </div>
+        <div>
+          <mat-form-field appearance="fill">
+            <mat-label><b>Versement de la gratification :</b></mat-label>
+            <select matNativeControl required>
+              <option value="Chèque">Chèque</option>
+              <option value="Virement bancaire">Virement bancaire</option>
+              <option value="Espèces">Espèces</option>
+            </select>
+          </mat-form-field><br><br>
+        </div>
+      </div>
+
+      <p>👉 <b><i>Pour les laboratoires de l’UGA, préciser l'organisme de prise en charge : </i></b> </p> <br>
       <mat-form-field appearance="outline">
-        <mat-label><b>Nom :</b></mat-label>
-          <input name='Nom' type="text" matInput required>
-          <mat-icon matSuffix>person</mat-icon>
-      </mat-form-field><br><br>
-
-      <mat-form-field appearance="outline">
-        <mat-label><b>Tél :</b></mat-label>
-          <input name='Tél' type="text" matInput required>
-          <mat-icon matSuffix>call</mat-icon>
-      </mat-form-field><br><br>
-
-      <mat-form-field class="label-full-width" appearance="outline">
-        <mat-label><b>Mail :</b></mat-label>
-        <input name='Mail' placeholder="Ex. ...@etu.univ-grenoble-alpes.fr" type="text" matInput required>
-        <mat-icon matSuffix>mail</mat-icon>
-      </mat-form-field><br><br>
-    </div>
-
-    <div>
-      <mat-form-field appearance="outline">
-        <mat-label><b>Prénom :</b></mat-label>
-        <input name='Prénom' type="text" matInput required>
-        <mat-icon matSuffix>person</mat-icon>
-      </mat-form-field><br><br>
-
-      <mat-form-field class="label-full-width" appearance="outline">
-        <mat-label><b>Adresse :</b></mat-label>
-        <textarea name='Adresse' placeholder="Ex.  435 allée des chênes verts - 38388 Labelleville " type="text" matInput required></textarea>
-        <mat-icon matSuffix>place</mat-icon>
-      </mat-form-field><br><br>
-    </div>
-  </div>
-</form>
-
-<br><br>
-
-<mat-toolbar>
-  <h2  style="position: relative;left: 50%; transform: translateX(-50%);">  TUTEUR TUTEUR PROFESSIONNEL DU STAGIAIRE </h2>
-</mat-toolbar><br><br>
-
-<form class ="label">
-
-  <div style="display: flex; justify-content: space-evenly;">
-
-    <div>
-      <mat-form-field appearance="outline">
-        <mat-label><b>Nom :</b></mat-label>
-          <input name='Nom' type="text" matInput required>
-          <mat-icon matSuffix>person</mat-icon>
-      </mat-form-field><br><br>
-
-      <mat-form-field appearance="outline">
-        <mat-label><b>Tél :</b></mat-label>
-          <input name='Tél' type="text" matInput required>
-          <mat-icon matSuffix>call</mat-icon>
-
-      </mat-form-field><br><br>
-      <mat-form-field appearance="outline">
-        <mat-label><b>Fonction : </b></mat-label>
-          <input name='Fonction' type="text" matInput required>
-          <mat-icon matSuffix>assignment</mat-icon>
-      </mat-form-field><br><br>
-
-      <mat-form-field appearance="outline">
-        <mat-label><b>Service :</b></mat-label>
-        <input name='Service' type="text" matInput required>
-        <mat-icon matSuffix></mat-icon>
-      </mat-form-field><br><br>
-
-    </div>
-
-    <div>
-      <mat-form-field appearance="outline">
-        <mat-label><b>Prénom :</b></mat-label>
-        <input name='Prénom' type="text" matInput required>
-        <mat-icon matSuffix>person</mat-icon>
-      </mat-form-field><br><br>
-
-      <mat-form-field class="label-full-width" appearance="outline">
-        <mat-label><b>Mail :</b></mat-label>
-        <input name='Mail' placeholder="Ex. ...@etu.univ-grenoble-alpes.fr" type="text" matInput required>
-        <mat-icon matSuffix>mail</mat-icon>
-      </mat-form-field><br><br>
-
-      <mat-form-field class="label-full-width" appearance="outline">
-        <mat-label><b>Adresse :</b></mat-label>
-        <textarea name='Adresse' placeholder="Ex.  435 allée des chênes verts - 38388 Labelleville " type="text" matInput required></textarea>
-        <mat-icon matSuffix>place</mat-icon>
-      </mat-form-field><br><br>
-
-      <mat-form-field class="label-full-width" appearance="fill">
-        <mat-label><b>Disponibilité du tuteur professionnel de stage : </b></mat-label>
-        <select matNativeControl required>
-          <option value="importante">importante</option>
-          <option value="partielle">partielle</option>
-          <option value="inexistante">inexistantet</option>
-        </select>
-      </mat-form-field><br><br>
-
-    </div>
-  </div>
-  <br>
-
-  <mat-icon matSuffix>date_range</mat-icon>  <b>DATES DU STAGE</b> :<br><br>
-
-    <p>Période temps partiel : </p> <br>
-    <div style="display: flex; justify-content: space-evenly;">
-    <div>
-      <mat-form-field appearance="outline">
-        <mat-label>Date de début</mat-label>
-        <input name='DateDeb' type="date" matInput required>
+        <mat-label><b>Organisme</b></mat-label>
+        <input name='Organisme' type="text" matInput>
       </mat-form-field> <br><br>
-    </div>
-    <div>
+
+      <p>👉 <b><i>Avantages en nature (restauration, hébergement, remboursement….) :</i></b></p> <br>
       <mat-form-field appearance="outline">
-        <mat-label>Date de fin</mat-label>
-        <input name='DateFin' type="date" matInput required>
+        <mat-label><b>Avantage</b></mat-label>
+        <input name='Avantage' type="text" matInput required>
       </mat-form-field> <br><br>
-    </div>
-  </div>
-  <br>
 
-  <p>Période temps plein (35 h/semaine) :</p> <br>
-  <div style="display: flex; justify-content: space-evenly;">
-    <div>
-      <mat-form-field appearance="outline">
-        <mat-label>Date de début</mat-label>
-        <input name='DateDeb' type="date" matInput required>
+    </form>
+    <div class="center">
+      <button class="center"> submit </button>
+    </div><br><br>
+
+  </mat-tab>
+
+  <mat-tab label="Confidentialité">
+    <mat-toolbar  class="bar">
+      <h2 style="position: relative;left: 50%; transform: translateX(-50%);"> CONFIDENTIALITE DU STAGE </h2>
+    </mat-toolbar><br><br>
+
+    <form>
+      <div>
+        <mat-form-field class="label-full-width" appearance="outline">
+          <mat-label><b>Titre du stage</b></mat-label>
+          <textarea name='Titre' type="text" matInput required></textarea>
+          <mat-icon matSuffix>title</mat-icon>
+        </mat-form-field>
+      </div> <br><br>
+      <mat-icon matSuffix>description</mat-icon><b>Description du projet de l'entreprise dans lequel le stagiaire sera
+        intégré / du produit sur lequel il travaillera : </b><br><br>
+      <mat-form-field class="label-full-width" appearance="outline">
+        <mat-label><b>Description du projet</b></mat-label>
+        <textarea name='DescriptionP' type="text" matInput required></textarea>
       </mat-form-field> <br><br>
-    </div>
-    <div>
-      <mat-form-field appearance="outline">
-        <mat-label>Date de fin</mat-label>
-        <input name='DateFin' type="date" matInput required>
+
+      <mat-icon matSuffix>description</mat-icon><b>Objectifs du stage dans ce projet : </b><br><br>
+      <mat-form-field class="label-full-width" appearance="outline">
+        <mat-label><b>Objectifs du stage</b></mat-label>
+        <textarea name='ObjectifP' type="text" matInput required></textarea>
       </mat-form-field> <br><br>
+
+      <mat-icon matSuffix>description</mat-icon><b>Tâches qui seront confiées au stagiaire pour cette mission
+        :</b><br><br>
+      <mat-form-field class="label-full-width" appearance="outline">
+        <mat-label><b>Tâches</b></mat-label>
+        <textarea name='Tâches' type="text" matInput required></textarea>
+      </mat-form-field> <br><br>
+
+      <mat-icon matSuffix>description</mat-icon><b>Détail des travaux à réaliser, avec langages et technos qui seront
+        utilisés :</b><br><br>
+      <mat-form-field class="label-full-width" appearance="outline">
+        <mat-label><b>Détail</b></mat-label>
+        <textarea name='Détail' type="text" matInput required></textarea>
+      </mat-form-field> <br><br>
+
+    </form>
+
+    <br><br>
+
+    <div class="center">
+      <button class="center"> submit </button>
     </div>
-  </div>
-  <br>
+    <br><br>
 
-
-</form>
-<br><br>
-
-
-Période temps partiel :              Date de début : <input>                 Date de fin :<input><br>
-Période temps plein (35 h/semaine) :    Date de début : 25 mai 2021     Date de fin :<input> <br>
-En cas d’interruption, merci de préciser les dates : du  <input>       au  <input>  <br><br>
-Nombre total d’heures du stage :<input> <br><br>
-
-<b>GRATIFICATIONS</b>(obligatoires pour tout stage, même fractionné, à partir du 45ème jour de présence) :<br><br>
-<br><br>
-
-<b>Si oui:</b> <br>
-Montant gratification <b>horaire</b> (si montant mensuel, le diviser par 154) : <input> € <br>
-Versement de la gratification : - Chèque - Virement bancaire - Espèces <br><br>
-
-Pour les laboratoires de l’UGA, préciser l'organisme de prise en charge:<input><br>
-Avantages en nature (restauration, hébergement, remboursement….) :<input><br><br>
-<b>Confidentialité du stage :</b><br><br>
-<b>TITRE DU STAGE :<input></b><br><br>
-
-Description du projet de l'entreprise dans lequel le stagiaire sera intégré / du produit sur lequel il travaillera :<br><br>
-Objectifs du stage dans ce projet :<br><br>
-Tâches qui seront confiées au stagiaire pour cette mission :<br><br>
-Détail des travaux à réaliser, avec langages et technos qui seront utilisés :<br><br>
-<b>Signature de l’enseignant référent du stage : (L.Pierre)</b><br><br>
-
-<b>Signatrure du tuteur professionnel</b><br>
-
-
+  </mat-tab>
+</mat-tab-group>
 
 
