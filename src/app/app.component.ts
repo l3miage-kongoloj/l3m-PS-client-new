@@ -16,7 +16,11 @@ export class AppComponent {
   prenomEtudiant! :string;
   numEtudiant! : string;
   numPortable! : string;
+  adE! : string;
   inscritEn! : string;
+  affE! :string;
+  mailE! :string;
+  CAMEt! : string
 
   etudiant$! : Promise<Etudiant>;
 
@@ -30,9 +34,21 @@ export class AppComponent {
 
   }
 
-  async createEtudiant(etudiant: any) {
+  async createEtudiant() {
+
+    let etudiant : Etudiant ={
+      "numEtudiant": this.numEtudiant,
+      "nom":this.nomEtudiant,
+     "prenom": this.prenomEtudiant,
+      "adresse" : this.adE,
+      "numPortable": this.numPortable,
+      "assurance": this.CAMEt,
+      "typeAffil" : this.affE,
+     "mail" : this.mailE
+
+    }
     alert(JSON.stringify(etudiant))
-    //await this.allService.createEtudiant(etudiant);
+    await this.allService.createEtudiant(etudiant);
   }
 
   get etudiant() {

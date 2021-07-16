@@ -19,8 +19,7 @@
         <div>
           <mat-form-field appearance="outline">
             <mat-label><b>Nom :</b></mat-label>
-            <input matInput ngModel pattern="[a-zA-Z]{1,}" name="nomEtud" #nomEtud="ngModel" type="text"  required>
-
+            <input matInput [(ngModel)]="nomEtudiant" pattern="[a-zA-Z]{1,}" name="nomEtud" #nomEtud="ngModel" type="text"  required>
             <mat-icon matSuffix>person</mat-icon>
             <mat-error *ngIf="nomEtud.errors?.required && (nomEtud.dirty || nomEtud.touched)" style="color : red;">Nom requis</mat-error>
             <mat-error *ngIf="nomEtud.errors?.pattern " class="text-danger" style="color : red;">
@@ -32,7 +31,7 @@
           <mat-form-field appearance="outline">
             <mat-label><b>Prénom :</b></mat-label>
 
-            <input ngModel #prenomEtud="ngModel" pattern="[a-zA-Zàáâäãçèéêëìíîïôö]{1,}" matInput name='prenomEtud' type="text" required>
+            <input [(ngModel)]="prenomEtudiant" #prenomEtud="ngModel" pattern="[a-zA-Zàáâäãçèéêëìíîïôö]{1,}" matInput name='prenomEtud' type="text" required>
             <mat-error *ngIf="prenomEtud.errors?.required && (prenomEtud.dirty || prenomEtud.touched)" style="color : red;">Prenom requis</mat-error>
             <mat-error *ngIf="prenomEtud.errors?.pattern " class="text-danger" style="color : red;">Prenom invalid </mat-error>
 
@@ -41,14 +40,14 @@
 
           <mat-form-field appearance="outline">
             <mat-label><b>N° étudiant : </b></mat-label>
-            <input  ngModel #numEtud="ngModel" pattern="[0-9]{9}" name='numEtud' type="text" matInput required>
+            <input  [(ngModel)]="numEtudiant" #numEtud="ngModel" pattern="[0-9]{9}" name='numEtud' type="text" matInput required>
             <mat-error *ngIf="numEtud.errors?.required && (numEtud.dirty || numEtud.touched)" style="color : red;">num Etudiant requis</mat-error>
             <mat-error *ngIf="numEtud.errors?.pattern " class="text-danger" style="color : red;">num Etudiant invalid </mat-error>
           </mat-form-field><br><br>
 
           <mat-form-field appearance="outline">
             <mat-label><b>N° de portable :</b></mat-label>
-            <input ngModel #numPo="ngModel" pattern="^[+]*(33|0)(6|7|9)[0-9]{8}$" name='numPo' placeholder="+33 7 01 01 01 01" type="text" matInput required>
+            <input [(ngModel)]="numPortable" #numPo="ngModel" pattern="^[+]*(33|0)(6|7|9)[0-9]{8}$" name='numPo' placeholder="+33 7 01 01 01 01" type="text" matInput required>
             <mat-error *ngIf="numPo.errors?.required && (numPo.dirty || numPo.touched)" style="color : red;">num de portable requis</mat-error>
             <mat-error *ngIf="numPo.errors?.pattern " class="text-danger" style="color : red;">num de portable invalid </mat-error>
           </mat-form-field><br><br>
@@ -66,7 +65,7 @@
         <div>
           <mat-form-field class="label-full-width" appearance="outline">
             <mat-label><b>Mail :</b></mat-label>
-            <input ngModel #mail="ngModel" name='mail' pattern="[a-zA-z.]{1,}[-][a-zA-z]{1,}@etu[.]univ-grenoble-alpes[.]fr" placeholder="Ex. ...@etu.univ-grenoble-alpes.fr" type="text" matInput required>
+            <input [(ngModel)]="mailE" #mail="ngModel" name='mail' pattern="[a-zA-z.]{1,}[-][a-zA-z]{1,}@etu[.]univ-grenoble-alpes[.]fr" placeholder="Ex. ...@etu.univ-grenoble-alpes.fr" type="text" matInput required>
             <mat-icon matSuffix>mail</mat-icon>
             <mat-error *ngIf="mail.errors?.required && (mail.dirty || mail.touched)" style="color : red;">Mail requis</mat-error>
             <mat-error *ngIf="mail.errors?.pattern " class="text-danger" style="color : red;">Mail invalid </mat-error>
@@ -74,14 +73,14 @@
 
           <mat-form-field class="label-full-width" appearance="outline">
             <mat-label><b>Adresse :</b></mat-label>
-            <textarea ngModel #ad="ngModel" name='ad' matInput placeholder="Ex. 435 allée des chênes verts - 38388 Labelleville" required></textarea>
+            <textarea [(ngModel)]="adE" #ad="ngModel" name='ad' matInput placeholder="Ex. 435 allée des chênes verts - 38388 Labelleville" required></textarea>
             <mat-error *ngIf="ad.errors?.required && (ad.dirty || ad.touched)" style="color : red;">adresse requis</mat-error>
             <mat-icon matSuffix>place</mat-icon>
           </mat-form-field><br><br>
 
           <mat-form-field appearance="fill">
             <mat-label><b>Type d'affiliation</b></mat-label>
-            <select #aff matNativeControl required>
+            <select [(ngModel)]="affE" #aff matNativeControl required>
               <option value="ayant droit">ayant droit</option>
               <option value="étudiant">étudiant</option>
               <option value="assuré volontaire">assuré volontaire</option>
@@ -91,7 +90,7 @@
 
           <mat-form-field appearance="fill">
             <mat-label><b>Caisse d’assurance maladie:</b></mat-label>
-            <select  #CAM matNativeControl required>
+            <select [(ngModel)]="CAMEt" #CAM matNativeControl required>
               <option value="CPAM">CPAM</option>
               <option value="MSA">MSA</option>
               <option value="Travailleur indépendant">Travailleur indépendant</option>
@@ -115,17 +114,8 @@
     <br><br>
 
     <div class="center">
-      <button class="center" (click)='createEtudiant(
-        {
-          numEtudiant: numEtud.value,
-          nom:nomEtud.value,
-          prenom: prenomEtud.value,
-          adresse : ad.value,
-          numPortable: numPo.value,
-          assurance: CAM.value,
-          typeAffil: aff.value,
-          mail : mail.value
-        })'>submit </button>
+
+    <button class="center" (click)='createEtudiant()'> submit </button>
 
 
     </div>
@@ -389,7 +379,11 @@
   </mat-tab>
 
   <mat-tab label="Info stage">
-    <br>
+
+    <mat-toolbar  class="bar">
+      <h2 style="position: relative;left: 50%; transform: translateX(-50%);"> DATES / GRATIFICATIONS STAGE </h2>
+    </mat-toolbar><br><br>
+
     <form>
 
       <mat-icon matSuffix>date_range</mat-icon> <b>DATES DU STAGE</b> :<br><br>
